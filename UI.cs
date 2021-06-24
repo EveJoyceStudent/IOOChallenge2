@@ -37,7 +37,7 @@ namespace CivSem1Challenge2_RegistrationSystem
             switch(input) {
 
                 case "1":
-                    //TODO: from the attribute this.Courses, print the courseNo and names of all of the courses
+                    //TO(Done)DO: from the attribute this.Courses, print the courseNo and names of all of the courses
                     // use GetCourseDetails to do this
                     foreach (Course item in this.Courses)
                     {
@@ -156,6 +156,12 @@ namespace CivSem1Challenge2_RegistrationSystem
         {
             //TODO: write code find the relevant courseNo in Courses and return the number of students/enrolments
             // if num doesn't exist in Courses, return -1
+            foreach (Course item in this.Courses)
+            {
+                if(item.CourseNo==num){
+                    return item.Enrolments.Count;
+                }
+            }
             return -1;
         }
 
