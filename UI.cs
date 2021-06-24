@@ -88,7 +88,7 @@ namespace CivSem1Challenge2_RegistrationSystem
                     break;
 
                 case "6":
-                   //TODO: Add a student to the student List. Then add that student to a valid course
+                   //TO(Done)DO: Add a student to the student List. Then add that student to a valid course
                    this.AddStudent();
                    break;
 
@@ -146,11 +146,11 @@ namespace CivSem1Challenge2_RegistrationSystem
         }
         //---------------------
 
-        private int GetValidStudents(){
-            int validStudents=0;
+        private string GetValidStudents(){
+            string validStudents="Valid Enrolments:";
             foreach (Course item in this.Courses)
             {
-                validStudents+=item.Enrolments.Count;
+                validStudents+=$"\nCourse {item.CourseNo}, Students:{item.Enrolments.Count}";
             }
             return validStudents;
         }
@@ -224,14 +224,36 @@ namespace CivSem1Challenge2_RegistrationSystem
                 System.Console.WriteLine("Invalid, enter again");
             }
 
-            //TODO: add student to the this.StudentList
+            //TO(Done)DO: add student to the this.StudentList
+            Student newStudent = new Student(fname,sname,yob,mob,dob,sno,fyor);
+            this.Students.Add(newStudent);
 
             System.Console.Write("Enter course number to add the student to: ");
-            //TODO: add the student to the desired course in this.Courses.  
+            //TO(Done)DO: add the student to the desired course in this.Courses.  
             //      If the course doesn't exist let the user know and go back to the main menu.
             // -----------------------
             // (optional - CREDIT TASK)  If the course doesn't exist keep asking until a valid course is entered.
             //                           User may enter 0000 for no course to be enrolled into
+            bool validcourse=false;
+            while(!validcourse){
+                while(!int.TryParse(Console.ReadLine(), out courseno)) {
+                    System.Console.WriteLine("Invalid, enter again");
+                }
+                foreach (Course item in this.Courses)
+                {
+                    if(item.CourseNo==courseno){
+                        validcourse=true;
+                        item.Enrolments.Add(newStudent);
+                    }
+                }
+                // technically allows any number of 0's to be input to accept null course
+                if(courseno==0){
+                    validcourse=true;
+                }
+                if(!validcourse){
+                System.Console.WriteLine("Invalid course, enter again");
+                }
+            }
 
         }
 
