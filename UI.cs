@@ -93,7 +93,7 @@ namespace CivSem1Challenge2_RegistrationSystem
                    break;
 
                 case "7":
-                    //TODO: Print all students who first registered on a given year and a doing a given course
+                    //TO(DONE)DO: Print all students who first registered on a given year and a doing a given course
                     System.Console.WriteLine("Please enter a year");
                     while(!int.TryParse(Console.ReadLine(), out num)) {
                         System.Console.WriteLine("Invalid, enter again");
@@ -105,18 +105,20 @@ namespace CivSem1Challenge2_RegistrationSystem
                         System.Console.WriteLine("Invalid, enter again");
                     }
 
-                    //TODO: print the students who first registered in year num and are doing course courseNum
+                    //TO(DONE)DO: print the students who first registered in year num and are doing course courseNum
                     Console.WriteLine(this.CourseGetNumStudentsYear(courseNum,num));
 
                     break;
 
                 case "8":
-                    //TODO: (optional CREDIT TASK) - Print a list of students who are not enrolled in a valid courses
+                    //TO(DONE)DO: (optional CREDIT TASK) - Print a list of students who are not enrolled in a valid courses
                     // create a method/function called GetUnenrolledStudents to do this
+                    this.GetUnenrolledStudents();
                     break;
 
                 case "9":
-                    //TODO: (optional DISTINCTION TASK) - Print the oldest student's studentno
+                    //TO(Done)DO: (optional DISTINCTION TASK) - Print the oldest student's studentno
+                    this.GetOldestStudent();
                     break;
 
                 case "10":
@@ -281,7 +283,53 @@ namespace CivSem1Challenge2_RegistrationSystem
 
         }
 
-        //TODO: Create the GetUnerolledStudents method/function here
+        //TO(Done)DO: Create the GetUnerolledStudents method/function here
+        private void GetUnenrolledStudents(){
+            List<Student> tempstudentlist=new List<Student>();
+            List<Student> enrolledlist=new List<Student>();
 
+            foreach (Course icourse in this.Courses)
+            {
+                enrolledlist=enrolledlist.Concat(icourse.Enrolments).ToList();
+            }
+
+            foreach (Student allstudent in this.Students)
+            {
+                foreach (Student enrol in enrolledlist)
+                {
+                    if(allstudent.StudentNo==enrol.StudentNo){
+                        tempstudentlist.Add(allstudent);
+                    }
+                }
+            }
+
+            var list1 = this.Students.Where(i => !tempstudentlist.Contains(i)).ToList();
+
+            foreach (Student item in list1)
+            {
+                Console.WriteLine(item.GetFullName());
+            }
+
+            Console.WriteLine($"number of unenrolled students: {list1.Count}");
+        }
+
+        private void GetOldestStudent(){
+            Student oldest=new Student("aa","aa",2021,12,31,0,2021);
+            for(int i=0;i<this.Students.Count;i++){
+                if(this.Students[i].YearOfBirth<oldest.YearOfBirth){
+                    oldest=this.Students[i];
+                } else if(this.Students[i].YearOfBirth==oldest.YearOfBirth){
+                    if(this.Students[i].MonthOfBirth<oldest.MonthOfBirth){
+                    oldest=this.Students[i];
+                    }else if(this.Students[i].MonthOfBirth==oldest.MonthOfBirth){
+                        if(this.Students[i].DateOfBirth<oldest.DateOfBirth){
+                            oldest=this.Students[i];
+                        }
+
+                    }
+                }
+            }
+            Console.WriteLine($"Oldest student {oldest.StudentNo}: {oldest.GetFullName()}, {oldest.DateOfBirth}/{oldest.MonthOfBirth}/{oldest.YearOfBirth}");
+        }
     }
 }
