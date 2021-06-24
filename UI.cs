@@ -77,8 +77,9 @@ namespace CivSem1Challenge2_RegistrationSystem
                     break;
 
                 case "4":
-                    //TODO: Print the amount of students in the system
+                    //TO(Done)DO: Print the amount of students in the system
                     // Create and call a method/function named GetNumStudents() to do this.
+                    Console.WriteLine(this.GetNumStudents());
                     break;
 
                 case "5":
@@ -139,9 +140,10 @@ namespace CivSem1Challenge2_RegistrationSystem
         }
 
 
-        //TODO: create the GetNumStudents method/function here
-
-
+        //TO(Done)DO: create the GetNumStudents method/function here
+        private int GetNumStudents(){
+            return this.Students.Count;
+        }
         //---------------------
 
         private string GetStudentName(int num)
