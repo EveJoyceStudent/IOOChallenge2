@@ -106,6 +106,7 @@ namespace CivSem1Challenge2_RegistrationSystem
                     }
 
                     //TODO: print the students who first registered in year num and are doing course courseNum
+                    Console.WriteLine(this.CourseGetNumStudentsYear(courseNum,num));
 
                     break;
 
@@ -180,6 +181,29 @@ namespace CivSem1Challenge2_RegistrationSystem
                 }
             }
             return -1;
+        }
+        private string CourseGetNumStudentsYear(int num, int iyear)
+        {
+            // if num doesn't exist in Courses, return -1
+            string outputString=$"Students in {num} first enrolled in {iyear}";
+
+            foreach (Course item in this.Courses)
+            {
+                if(item.CourseNo==num){
+                    int studentcount=0;
+                    foreach (Student studentitem in item.Enrolments)
+                    {
+                        if(studentitem.FirstRegistrationYear==iyear){
+                            studentcount++;
+                            outputString+=$"\n{studentitem.GetFullName()}";
+                        }
+                    }
+                    outputString+=$"\nNumber of students: {studentcount}";
+                    return outputString;
+                }
+            }
+            outputString="invalid course";
+            return outputString;
         }
 
         private void AddStudent()
