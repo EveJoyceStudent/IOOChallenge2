@@ -4,10 +4,16 @@ using System.Linq;
 using CivSem1Challenge2_RegistrationSystem.helpers;
 using CivSem1Challenge2_RegistrationSystem.models;
 
+using System.Globalization;
+using System.IO;
+using CsvHelper;
+using CsvHelper.Configuration;
+
 namespace CivSem1Challenge2_RegistrationSystem
 {
     public class UI
     {
+        
         public List<Course> Courses { get; set; }
         public List<Student> Students { get; set; }
         public UI() {
@@ -124,6 +130,7 @@ namespace CivSem1Challenge2_RegistrationSystem
                 case "10":
                     //TODO: (optional HIGH DISTINCTION TASK) - Write the current state of the system back to the csv files.
                     // add a method to the DataHandler class to do this
+                    this.SaveData();
                     break;
 
                 case "x":
@@ -330,6 +337,23 @@ namespace CivSem1Challenge2_RegistrationSystem
                 }
             }
             Console.WriteLine($"Oldest student {oldest.StudentNo}: {oldest.GetFullName()}, {oldest.DateOfBirth}/{oldest.MonthOfBirth}/{oldest.YearOfBirth}");
+        }
+
+        private void SaveData(){
+            var config = new CsvConfiguration (CultureInfo.InvariantCulture) {
+                PrepareHeaderForMatch = args => args.Header.ToLower (),
+            };
+
+            using (var writer = new StreamWriter("savedatastudent.csv"))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(this.Students);
+            }
+            using (var writer = new StreamWriter("savedatacourse.csv"))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(this.Courses);
+            }
         }
     }
 }
