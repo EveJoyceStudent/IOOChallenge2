@@ -154,7 +154,7 @@ namespace CivSem1Challenge2_RegistrationSystem
 
         private int CourseGetNumStudents(int num)
         {
-            //TODO: write code find the relevant courseNo in Courses and return the number of students/enrolments
+            //TO(Done)DO: write code find the relevant courseNo in Courses and return the number of students/enrolments
             // if num doesn't exist in Courses, return -1
             foreach (Course item in this.Courses)
             {
